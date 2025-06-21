@@ -1,0 +1,39 @@
+<h2 mat-dialog-title> Editar curso</h2>
+
+<mat-dialog-content>
+
+
+<form style="display: flex; flex-direction: column; gap: 20px;">
+
+    <mat-form-field  appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="curso.nombre" name="nombre" />
+  </mat-form-field>
+
+<mat-form-field  appearance="fill">
+  <mat-label>Descripción</mat-label>
+  <input matInput [(ngModel)]="curso.descripcion" name="descripcion"/>
+</mat-form-field>
+
+
+  
+ <mat-form-field appearance="fill">
+
+    <mat-label>Duracion (semanas) </mat-label>
+    <input matInput [(ngModel)]="curso.duracionSemanas" name="duracion"/>
+  </mat-form-field>
+
+  
+
+  <div style="display: flex; justify-content: flex-end; gap: 8px;">
+    <button mat-button (click)="cerrar()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+  </div>
+    
+</form>
+
+
+
+
+
+</mat-dialog-content>
