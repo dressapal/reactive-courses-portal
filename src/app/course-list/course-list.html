@@ -1,0 +1,66 @@
+<div class="container">
+<mat-form-field appearance="outline">
+  <mat-label>Buscar curso</mat-label>
+  <input matInput [formControl]="buscador" placeholder="Nombre del curso" />
+</mat-form-field>
+
+<mat-card>
+  <h2 >Lista de Cursos</h2>
+
+  <table mat-table [dataSource]="cursos()" class="mat-elevation-z2" style="width: 100%">
+
+    <!-- Columna Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let curso"> {{ curso.nombre }} </td>
+    </ng-container>
+
+    <!-- Columna Descripción -->
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let curso"> {{ curso.descripcion }} </td>
+    </ng-container>
+
+    <!-- Columna Fecha Inicio -->
+    <ng-container matColumnDef="fechaInicio">
+      <th mat-header-cell *matHeaderCellDef> Inicio </th>
+      <td mat-cell *matCellDef="let curso"> {{ curso.fechaInicio | date:'shortDate' }} </td>
+    </ng-container>
+
+    <!-- Columna Duración -->
+    <ng-container matColumnDef="duracion">
+      <th mat-header-cell *matHeaderCellDef> Duración (sem) </th>
+      <td mat-cell *matCellDef="let curso"> {{ curso.duracionSemanas }} </td>
+    </ng-container>
+
+    <!-- Columna Activo -->
+    <ng-container matColumnDef="activo">
+      <th mat-header-cell *matHeaderCellDef> Activo </th>
+      <td mat-cell *matCellDef="let curso">
+        <mat-icon color="{{ curso.activo ? 'primary' : 'warn' }}">
+          {{ curso.activo ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Columna Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let curso">
+        <button mat-icon-button color="primary" aria-label="Editar"  (click)="editarCurso(curso)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" aria-label="Eliminar">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Filas de encabezado y datos -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+</mat-card>
+
+</div>
