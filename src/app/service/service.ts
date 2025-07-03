@@ -21,4 +21,13 @@ export class Service {
  updateCurso(id: number, curso: Partial<Curso>): Observable<Curso> {
     return this.http.put<Curso>(`${this.baseURL}/${id}`, curso);
   }
+
+  deleteCurso(id: number) {
+    return this.http.delete<Curso>(`${this.baseURL}/${id}` );
+  }
+
+
+ addCurso(curso: Curso): Observable<Curso> {
+    return this.http.post<Curso>(`${this.baseURL}`, curso);
+  }
 }

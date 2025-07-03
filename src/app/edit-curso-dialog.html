@@ -1,4 +1,4 @@
-<h2 mat-dialog-title> Editar curso</h2>
+<h2 mat-dialog-title> {{esEdicion ? 'Editar curso' : 'Nuevo curso'}}</h2>
 
 <mat-dialog-content>
 
@@ -16,20 +16,33 @@
 </mat-form-field>
 
 
-  
+
+
+
+
  <mat-form-field appearance="fill">
 
     <mat-label>Duracion (semanas) </mat-label>
     <input matInput [(ngModel)]="curso.duracionSemanas" name="duracion"/>
   </mat-form-field>
 
-  
+
+
+<mat-form-field>
+  <mat-label>fecha inicio</mat-label>
+  <input matInput [matDatepicker]="datepicker" [(ngModel)]="curso.fechaInicio" name="fechaInicio">
+  <mat-datepicker #datepicker/>
+  <mat-datepicker-toggle [for]="datepicker" matSuffix/>
+</mat-form-field>
+
+<mat-slide-toggle [(ngModel)]="curso.activo"   [ngModelOptions]="{ standalone: true }"> Estado: {{curso.activo? 'activo' : 'desabilitado'}} </mat-slide-toggle>
+
 
   <div style="display: flex; justify-content: flex-end; gap: 8px;">
     <button mat-button (click)="cerrar()">Cancelar</button>
     <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
   </div>
-    
+
 </form>
 
 

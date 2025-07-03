@@ -5,7 +5,14 @@
 </mat-form-field>
 
 <mat-card>
-  <h2 >Lista de Cursos</h2>
+   <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Lista de Cursos</h2>
+    <button mat-button color="primary" (click)="addCourse()">
+      <mat-icon>add</mat-icon>
+      Adicionar Curso
+    </button>
+  </div>
+
 
   <table mat-table [dataSource]="cursos()" class="mat-elevation-z2" style="width: 100%">
 
@@ -50,7 +57,7 @@
         <button mat-icon-button color="primary" aria-label="Editar"  (click)="editarCurso(curso)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" aria-label="Eliminar">
+        <button mat-icon-button color="warn" aria-label="Eliminar"  (click)="eliminarCurso(curso)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

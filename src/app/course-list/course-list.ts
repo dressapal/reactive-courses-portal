@@ -26,6 +26,7 @@ import {
 } from '@angular/material/form-field';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { DeleteCourse } from '../delete-course/delete-course';
 
 @Component({
   selector: 'app-course-list',
@@ -66,7 +67,6 @@ export class CourseList {
     'activo',
     'acciones',
   ];
-  //cursos = toSignal(this.cursoService.getCursos(), { initialValue: [] });
   private refrescar = signal(0);
   cursos = signal<Curso[]>([]);
 
@@ -122,5 +122,63 @@ export class CourseList {
           panelClass: 'custom-snackbar',
         });
       });
+  }
+
+  eliminarCurso(curso:Curso){
+    console.log(curso);
+    const dialogRefDelete = this.dialog.open(DeleteCourse, {
+      data: curso,
+      width: '600px', // ancho
+      maxWidth: '90vw', // máximo ancho (opcional)
+      height: 'auto', // alto (puede ser 'auto' o fijo como '400px')
+      maxHeight: '80vh', // máximo alto (opcional)
+    });
+
+
+    dialogRefDelete.afterClosed().pipe(
+        filter(Boolean),
+        switchMap((eliminarCurso:Curso) =>
+          this.cursoService.deleteCurso(eliminarCurso._id)
+        ),
+        tap(() => {
+          this.refrescar.set(this.refrescar() + 1);
+        })
+    ) .subscribe(() => {
+        this.snackBar.open('🍕 Curso eliminado con éxito', 'Cerrar', {
+          duration: 3000, // ms, se cierra solo
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+
+          panelClass: 'custom-snackbar',
+        });
+      });
+
+  }
+
+  addCourse(){
+    console.log("add curso")
+    const dialogRef = this.dialog.open(EditCursoDialog, {
+      data: {},
+      width: '600px', // ancho
+      maxWidth: '90vw', // máximo ancho (opcional)
+      height: 'auto', // alto (puede ser 'auto' o fijo como '400px')
+      maxHeight: '80vh', // máximo alto (opcional)
+    });
+
+    dialogRef.afterClosed().pipe(
+      filter(Boolean),
+      switchMap((addCurso:Curso) => this.cursoService.addCurso(addCurso)),
+      tap(()=>  this.refrescar.set(this.refrescar() + 1))
+    ).subscribe(()=> {
+            this.snackBar.open('🍕 Curso grabado con éxito', 'Cerrar', {
+          duration: 3000, // ms, se cierra solo
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+
+          panelClass: 'custom-snackbar',
+        });
+    })
+
+
   }
 }
